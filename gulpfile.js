@@ -36,11 +36,13 @@ var eslint = require('gulp-eslint');
 var concat = require('gulp-concat');
 // npm install --save-dev gulp-uglify
 var uglify = require('gulp-uglify');
+// npm install --save gulp-uglifycss
+var uglifycss = require('gulp-uglifycss');
 
 gulp.task('default', function(done) {
     gulp.watch('sass/**/*.scss', ['styling']);
-    gulp.watch('js/**/*.js', ['lint', 'scripts']);
-    gulp.watch(['index.html', './js/*.js', './css/main.css']).on('change', browserSync.reload);
+    gulp.watch('js/**/*.js', ['lint']);
+    gulp.watch(['index.html', 'js/*.js', 'css/main.css']).on('change', browserSync.reload);
     browserSync.init({
         server: './'
     });
@@ -55,12 +57,12 @@ gulp.task('browserSync', function(done) {
 gulp.task('styling', function(done) {
     gulp.src('sass/**/*.scss')
         .pipe(sass({
-            outputStyle: 'compressed'
+            outputStyle: 'compact'
         }).on('error', sass.logError))
         .pipe(autoprefixer({
             browsers: ['last 2 versions']
         }))
-        .pipe(gulp.dest('./css'));
+        .pipe(gulp.dest('./css/'));
     done();
 });
 
@@ -77,42 +79,20 @@ gulp.task('lint', function() {
         .pipe(eslint.failOnError());
 });
 
-gulp.task('copy-html', function(done) {
-    gulp.src('./index.html')
-        .pipe((gulp.dest('distribution')));
-    done();
-});
-
-gulp.task('copy-images', function(done) {
-    gulp.src('img/*')
-        .pipe((gulp.dest('distribution/img')));
-    done();
-});
-
-gulp.task('scripts', function(done) {
-    gulp.src('js/**/*.js')
-        .pipe(concat('main.js'))
-        .pipe(gulp.dest('distribution/js'));
-    done();
-});
-
 gulp.task('Done', function(done) {
     gulp.src('./index.html')
         .pipe((gulp.dest('distribution')));
-    gulp.src('sass/**/*.scss')
-        .pipe(sass({
-            outputStyle: 'compressed'
-        }).on('error', sass.logError))
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions']
+    gulp.src('css/main.css')
+        .pipe(uglifycss({
+            "maxLineLen": 80,
+            "uglyComments": true
         }))
         .pipe(gulp.dest('distribution/css'));
     gulp.src('js/**/*.js')
-        .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(gulp.dest('distribution/js'));
-    gulp.src('img/**/*')
-        .pipe((gulp.dest('distribution/img')));
+    gulp.src('images/*')
+        .pipe((gulp.dest('distribution/images')));
     
     done();
 });
