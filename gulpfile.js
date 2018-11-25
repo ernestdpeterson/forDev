@@ -34,6 +34,8 @@ var browserSync = require('browser-sync').create();
 var eslint = require('gulp-eslint');
 // npm install gulp-concat
 var concat = require('gulp-concat');
+// npm install --save-dev gulp-babel @babel/core @babel/preset-env
+var babel = require('gulp-babel');
 // npm install --save-dev gulp-uglify
 var uglify = require('gulp-uglify');
 // npm install --save gulp-uglifycss
@@ -89,6 +91,8 @@ gulp.task('Done', function(done) {
         }))
         .pipe(gulp.dest('distribution/css'));
     gulp.src('js/**/*.js')
+        // compile all es6 to es5 before minifying
+        .pipe(babel({presets: ['@babel/env']}))
         .pipe(uglify())
         .pipe(gulp.dest('distribution/js'));
     gulp.src('images/*')
