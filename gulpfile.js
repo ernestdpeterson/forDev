@@ -40,6 +40,9 @@ var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
 // npm install --save gulp-uglifycss
 var uglifycss = require('gulp-uglifycss');
+// npm install --save-dev gulp-shell
+var shell = require('gulp-shell');
+// gulp Start
 
 gulp.task('default', function(done) {
     gulp.watch('sass/**/*.scss', ['styling']);
@@ -81,6 +84,17 @@ gulp.task('lint', function() {
         .pipe(eslint.failOnError());
 });
 
+gulp.task('Start', 
+    shell.task([
+        'touch index.html', 
+        'mkdir sass', 
+        'touch sass/main.scss', 
+        'mkdir js', 
+        'touch js/main.js',
+        'mkdir images'
+    ])
+);
+
 gulp.task('Done', function(done) {
     gulp.src('./index.html')
         .pipe((gulp.dest('distribution')));
@@ -97,6 +111,5 @@ gulp.task('Done', function(done) {
         .pipe(gulp.dest('distribution/js'));
     gulp.src('images/*')
         .pipe((gulp.dest('distribution/images')));
-    
     done();
 });
