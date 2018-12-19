@@ -45,8 +45,14 @@ var shell = require('gulp-shell');
 // gulp Start
 
 gulp.task('default', function(done) {
+    // gulp 3x syntax
     gulp.watch('sass/**/*.scss', ['styling']);
+    // for gulp 4x, comment out above and uncomment bellow.
+    //gulp.watch('sass/**/*.scss', gulp.series('styling'));
+    // gulp 3x syntax
     gulp.watch('js/**/*.js', ['lint']);
+    // for gulp 4x, comment out above and uncomment bellow.
+    //gulp.watch('js/**/*.js', gulp.series('lint'));
     gulp.watch(['index.html', 'js/*.js', 'css/main.css']).on('change', browserSync.reload);
     browserSync.init({
         server: './'
