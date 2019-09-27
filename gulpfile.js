@@ -31,6 +31,21 @@ var browserSync = require('browser-sync').create();
 // npm install gulp-eslint
 // ./node_modules/.bin/eslint --init
 // add to top of js file: /*eslint-env jquery*/
+// add to package.json: 
+// ,
+//   "browserslist": [
+//     "> 1%",
+//     "ie >= 8",
+//     "edge >= 15",
+//     "ie_mob >= 10",
+//     "ff >= 45",
+//     "chrome >= 45",
+//     "safari >= 7",
+//     "opera >= 23",
+//     "ios >= 7",
+//     "android >= 4",
+//     "bb >= 10"
+//   ]
 var eslint = require('gulp-eslint');
 // npm install gulp-concat
 var concat = require('gulp-concat');
@@ -70,9 +85,7 @@ gulp.task('styling', function(done) {
         .pipe(sass({
             outputStyle: 'compact'
         }).on('error', sass.logError))
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions']
-        }))
+        .pipe(autoprefixer({}))
         .pipe(gulp.dest('./css/'));
     done();
 });
