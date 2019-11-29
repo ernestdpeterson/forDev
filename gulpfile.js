@@ -48,7 +48,7 @@ var browserSync = require('browser-sync').create();
 //   ]
 var eslint = require('gulp-eslint');
 // npm install gulp-concat
-var concat = require('gulp-concat');
+// var concat = require('gulp-concat');
 // npm install --save-dev gulp-babel @babel/core @babel/preset-env
 var babel = require('gulp-babel');
 // npm install --save-dev gulp-uglify
@@ -60,15 +60,9 @@ var shell = require('gulp-shell');
 // gulp Start
 
 gulp.task('default', function(done) {
-    // gulp 3x syntax
-    // gulp.watch('sass/**/*.scss', ['styling']);
-    // for gulp 4x, comment out above and uncomment bellow.
     gulp.watch('sass/**/*.scss', gulp.series('styling'));
-    // gulp 3x syntax
-    // gulp.watch('js/**/*.js', ['lint']);
-    // for gulp 4x, comment out above and uncomment bellow.
     gulp.watch('js/**/*.js', gulp.series('lint'));
-    gulp.watch(['index.html', 'js/*.js', 'css/main.css']).on('change', browserSync.reload);
+    gulp.watch(['index.html', 'js/*.js', 'sass/**/*.scss']).on('change', browserSync.reload);
     browserSync.init({
         server: './'
     });
@@ -115,7 +109,7 @@ gulp.task('Start',
 );
 
 gulp.task('Done', function(done) {
-    gulp.src('./index.html')
+    gulp.src('./*.html')
         .pipe((gulp.dest('distribution')));
     gulp.src('css/main.css')
         .pipe(uglifycss({
