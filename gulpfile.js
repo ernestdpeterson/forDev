@@ -47,8 +47,6 @@ var browserSync = require('browser-sync').create();
 //     "bb >= 10"
 //   ]
 var eslint = require('gulp-eslint');
-// npm install gulp-concat
-// var concat = require('gulp-concat');
 // npm install --save-dev gulp-babel @babel/core @babel/preset-env
 var babel = require('gulp-babel');
 // npm install --save-dev gulp-uglify
