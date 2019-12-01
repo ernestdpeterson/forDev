@@ -57,6 +57,8 @@ var uglify = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
 // npm install --save-dev gulp-shell
 var shell = require('gulp-shell');
+// npm install --save-dev gulp-replace
+var replace = require('gulp-replace');
 // gulp Start
 
 gulp.task('default', function(done) {
@@ -109,20 +111,26 @@ gulp.task('Start',
 );
 
 gulp.task('Done', function(done) {
-    gulp.src('./*.html')
-        .pipe((gulp.dest('distribution')));
+
+    gulp.src(['index.html'])
+        .pipe(replace('development.js', 'production.min.js'))
+        .pipe(gulp.dest('distribution'));
+
     gulp.src('css/main.css')
         .pipe(uglifycss({
             "maxLineLen": 80,
             "uglyComments": true
         }))
         .pipe(gulp.dest('distribution/css'));
+
     gulp.src('js/**/*.js')
         // compile all es6 to es5 before minifying
         .pipe(babel({presets: ['@babel/env']}))
         .pipe(uglify())
         .pipe(gulp.dest('distribution/js'));
+
     gulp.src('images/*')
         .pipe((gulp.dest('distribution/images')));
+
     done();
 });
