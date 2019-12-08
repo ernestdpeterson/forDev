@@ -20,6 +20,33 @@
 // [22:35:42] CLI version 1.4.0 (at time of writing)
 // [22:35:42] Local version 4.0.0-alpha.2
 
+
+
+// TO INSTALL THIS GULP FILE:
+// ON THE COMAND LINE: 
+//    npm init
+//    npm install --save-dev gulp-shell gulp-replace
+//    gulp Start
+//    ./node_modules/.bin/eslint --init
+// ADD TO PACKAGE.JSON: 
+// ,
+//   "browserslist": [
+//     "> 1%",
+//     "ie >= 8",
+//     "edge >= 15",
+//     "ie_mob >= 10",
+//     "ff >= 45",
+//     "chrome >= 45",
+//     "safari >= 7",
+//     "opera >= 23",
+//     "ios >= 7",
+//     "android >= 4",
+//     "bb >= 10"
+//   ]
+
+
+
+
 // npm init
 var gulp = require('gulp');
 // npm install gulp-sass
@@ -99,7 +126,10 @@ gulp.task('lint', function() {
 
 gulp.task('Start', 
     shell.task([
-        'touch index.html', 
+        'npm install gulp-sass gulp-eslint',
+        'npm install --save-dev gulp-autoprefixer browser-sync gulp gulp-babel @babel/core @babel/preset-env gulp-uglify',
+        'npm install --save gulp-uglifycss',
+        'touch index.html',
         'mkdir sass', 
         'touch sass/main.scss', 
         'mkdir js', 
